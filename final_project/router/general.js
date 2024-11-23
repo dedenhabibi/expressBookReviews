@@ -39,8 +39,13 @@ public_users.get('/isbn/:isbn', function (req, res) {
     //Write your code here
 
     const isbn = req.params.isbn;
-    res.send(books[isbn]); // isbn here means the dictionary key of the books
 
+    if (books[isbn]) {
+        return res.send(books[isbn]); // isbn here means the dictionary key of the books
+    }
+    
+    return res.status(404).json({ message: "No book with ISBN: " + isbn});
+    
     //return res.status(300).json({ message: "Yet to be implemented" });
 });
 
@@ -61,7 +66,7 @@ public_users.get('/author/:author', function (req, res) {
     if (bookswithsameauthor.length > 0) {
         res.send(bookswithsameauthor);
     } else {
-        res.status(400).json({ message: "No book authored by " + author + " found."});
+        res.status(404).json({ message: "No book authored by " + author + " found."});
     }
 
     //return res.status(300).json({ message: "Yet to be implemented" });
@@ -84,7 +89,7 @@ public_users.get('/title/:title', function (req, res) {
     if (bookswithsametitle.length > 0) {
         res.send(bookswithsametitle);
     } else {
-        res.status(400).json({ message: "No book titled '" + title + "' found."});
+        res.status(404).json({ message: "No book titled '" + title + "' found."});
     }
 
 

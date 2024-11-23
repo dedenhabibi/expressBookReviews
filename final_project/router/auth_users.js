@@ -64,7 +64,40 @@ regd_users.post("/login", (req, res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+
+    let isbn = req.params.isbn;
+    let username = req.session.authorization.username;
+    let review = req.query.review;
+    
+    if (books[isbn]) {
+        books[isbn].reviews[username] = review;
+        return res.send({ message: "Review by " + username + " to book '" + books[isbn].title + "' has been added/updated." });
+    }
+    
+    return res.status(404).json({ message: "No book with ISBN " + isbn + " to be reviewed"});
+
+    //return res.status(300).json({ message: "Yet to be implemented" });
+});
+
+// Delete a book review
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    //Write your code here
+
+    let isbn = req.params.isbn;
+    let username = req.session.authorization.username;
+    
+    if (books[isbn]) {
+        if (books[isbn].reviews[username]) {
+            delete books[isbn].reviews[username];
+            return res.send({ message: "Review by " + username + " to book '" + books[isbn].title + "' has been deleted." });
+        } else {
+            return res.status(404).json({ message: "No review on book ISBN " + isbn + " by " + username});
+        }
+    } else {
+        return res.status(404).json({ message: "No book with ISBN " + isbn});
+    }
+
+    //return res.status(300).json({ message: "Yet to be implemented" });
 });
 
 module.exports.authenticated = regd_users;
