@@ -53,7 +53,25 @@ public_users.get('/author/:author', function (req, res) {
 // Get all books based on title
 public_users.get('/title/:title', function (req, res) {
     //Write your code here
-    return res.status(300).json({ message: "Yet to be implemented" });
+
+    const title = req.params.title;
+
+    // Filter the books dictionary for any book with the same title
+    let bookswithsametitle = [];
+
+    for (const [isbn, book] of Object.entries(books)) {
+        if (book.title === title) bookswithsametitle.push(book);
+    }
+
+    // Response with list of books if there are books with the same title found, otherwise return "No book with that title"
+    if (bookswithsametitle.length > 0) {
+        res.send(bookswithsametitle);
+    } else {
+        res.status(400).json({ message: "No book titled '" + title + "' found."});
+    }
+
+
+    // return res.status(300).json({ message: "Yet to be implemented" });
 });
 
 //  Get book review
