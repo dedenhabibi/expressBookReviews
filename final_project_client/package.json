@@ -1,0 +1,17 @@
+{
+  "name": "bookshop_client",
+  "version": "1.0.0",
+  "description": "the client/consumer of bookship-API",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "task10": "node task10.js",
+    "task11": "node task11.js",
+    "task12": "node task12.js",
+    "task13": "node task13.js"
+  },
+  "author": "Deden Alfathimy",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.7.7"
+  }
+}
